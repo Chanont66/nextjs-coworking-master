@@ -1,23 +1,26 @@
 /* -------------------- Background -------------------- */
 .cw-signup-page {
-  min-height: 100vh;
-  background: linear-gradient(270deg, #f5f7fa, #dceeff, #e6e0ff, #ffe6f7, #f5f7fa);
-  background-size: 1000% 1000%;
-  display: flex;
-    align-items: center;
-    justify-content: center;
-  position: relative;
-  animation: animatedGradient 150s ease infinite;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  overflow: hidden;
+    min-height: 100vh;
+    background-image: url('https://www.remessaonline.com.br/blog/wp-content/uploads/2022/12/coworking.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+        align-items: center;
+        justify-content: center;
+    position: relative;
+    backdrop-filter: blur(120px);
+    -webkit-backdrop-filter: blur(120px);
 }
 
-@keyframes animatedGradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+.cw-signup-page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* ปรับความเข้มได้ */
+    z-index: -1;
 }
+
 
 /* -------------------- Form Container -------------------- */
 .cw-signup-box {
