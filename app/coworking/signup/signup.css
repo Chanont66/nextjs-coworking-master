@@ -1,0 +1,163 @@
+/* -------------------- Background -------------------- */
+.cw-signup-page {
+  min-height: 100vh;
+  background: linear-gradient(270deg, #f5f7fa, #dceeff, #e6e0ff, #ffe6f7, #f5f7fa);
+  background-size: 1000% 1000%;
+  display: flex;
+    align-items: center;
+    justify-content: center;
+  position: relative;
+  animation: animatedGradient 150s ease infinite;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+@keyframes animatedGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* -------------------- Form Container -------------------- */
+.cw-signup-box {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    padding: 25px;
+    width: 100%;
+    max-width: 580px;
+}
+
+/* -------------------- Typography -------------------- */
+.cw-form-title {
+    color: #333;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 1px;
+    margin-top: 1px;
+    position: relative;
+}
+
+.cw-page-subtitle {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+
+.cw-login-link {
+    color: #5e81ea;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* -------------------- Form Elements -------------------- */
+.cw-signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cw-form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cw-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.cw-name-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.cw-input-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #444;
+}
+
+.cw-input-field {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.cw-input-field:focus {
+    border-color: #6687ef;
+    outline: none;
+}
+
+/* -------------------- Submit Button -------------------- */
+.cw-submit-button {
+  cursor: pointer;
+  width: 100%;
+  background-color: #4F46E5;
+  border: none;
+  color: #FFFFFF;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  transition: all 200ms;
+  height: 2.75rem;
+  margin-top: 0.6rem;
+  margin-bottom: 0.1rem;
+  display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cw-submit-button:hover {
+    background-color: #4338CA;
+  }
+  
+.cw-submit-button:disabled {
+    opacity: 0.7; /* ปรับความโปร่งใส */
+    cursor: not-allowed;
+}
+
+.cw-spinner {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    border-top: 3px solid #5e81ea;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* -------------------- Error Message -------------------- */
+.cw-show-error {
+    background-color: #ffe5e5;
+    color: #e74c3c;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    border-left: 3px solid #e74c3c;
+}
+
+/* -------------------- Responsive Adjustments -------------------- */
+@media (max-width: 580px) {
+    .cw-signup-box {
+        padding: 20px;
+    }
+    
+    .cw-name-fields {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}

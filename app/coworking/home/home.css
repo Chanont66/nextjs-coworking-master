@@ -1,0 +1,438 @@
+
+
+/* -------------------- พื้นหลังหน้า home -------------------- */
+.Main-home-page {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6)),
+        url('https://img.wongnai.com/p/1920x0/2017/04/09/06c3f8fd0a4f4441b1603f5d831534c5.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+
+
+/* -------------------- ส่วนหัวเว็บ -------------------- */
+.site-header {
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100; /*ทำให้ไม่โดนทับ*/
+    width: 100%;
+}
+
+.header-container {
+    display: flex;
+    padding: 1.18rem 3rem;
+    max-width: 1400px;
+}
+
+.site-title {
+    cursor: pointer;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
+    margin-right: 2rem;
+    white-space: nowrap;
+    text-decoration: none; 
+}
+
+
+
+/* -------------------- เมนูนำทาง -------------------- */
+.nav-container {
+    display: flex;
+    align-items: center;
+    margin-right: 5rem;
+}
+
+.containerLeft {
+    display: flex;
+    align-items: center;
+    margin-left: 23rem;
+}
+
+.containerRight {
+    margin-right: 1rem;
+}
+
+.nav-menu {
+    margin-right: 0.5rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.nav-link:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+
+
+/* -------------------- กระเป๋าเงินผู้ใช้ -------------------- */
+.wallet-balance {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.wallet-balance:hover {
+    background-color: #e7eaf0;
+}
+
+.balance-label {
+    margin-left: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #333;
+    white-space: nowrap;
+}
+
+.balance-amount {
+    margin-right: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #4a6fb3;
+    white-space: nowrap;
+}
+
+
+
+/* -------------------- ปุ่มออกจากระบบ -------------------- */
+.logout-button {
+    margin-left: 0.7rem;
+    background-color: white;
+    color: #333;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.logout-button:hover {
+    background-color: #f5d3d3;
+    color: #333;
+}
+
+/* ------------ card logout ------------ */
+/* ------------ card logout ------------ */
+.modal-overlay { /*ทำให้มันไม่โดนทับ*/
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .confirmation-dialog { /*กล่องพื้นหลัง*/
+    background-color: white;
+    border-radius: 8px;
+    padding: 24px;
+    width: 320px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+  }
+  
+  .dialog-title { /* หัวข้อ */
+    margin-top: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 16px;
+  }
+  
+  .dialog-message { /* คำถาม */
+    margin-bottom: 24px;
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .cancel-button { /* ปุ่มยกเลิก */
+    padding: 10px 20px;
+    margin-right: 12px;
+    background-color: #c6c6c6;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  
+  .confirm-button { /* ปุ่มตกลง */
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .confirm-button:hover {
+    background-color: #e53935;
+  }
+
+
+
+/* -------------------- ไว้จัดหน้า page -------------------- */
+.home-container {
+    min-height: calc(100vh - 60px);
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+
+
+/* -------------------- กล่องเนื้อหา (การ์ด) -------------------- */
+.content-card { /*ข้อมูลเพิ่มเติม*/
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+}
+
+.content-card2 { /*จองห้อง*/
+    margin-top: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+}
+
+.content-card2:first-child { /*ข้อมูลผู้ใช้*/
+    margin-top: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    height: 280px;
+}
+
+.section-title {
+    font-size: 1.3rem;
+    color: #723408;
+    margin: 0 0 1.2rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+
+
+/* -------------------- โปรไฟล์ผู้ใช้ -------------------- */
+.profile-grid { /*ตำแหน่ง card*/
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 2rem 0.5;
+    padding: 0 1rem;
+}
+
+.profile-item { /*เหมือน card ข้างในอีกทีแต่ขก.เปลี่ยนชื่อละ*/
+    padding: 0.6rem;
+    background-color: #fafafa;
+    border-radius: 4px;
+    border: 1px solid #f0f0f0;
+}
+
+.profile-item:hover {
+    background-color: #f5f5f5;
+}
+
+.profile-label { /*หัวข้อ*/
+    font-size: 0.8rem;
+    color: #777;
+    margin: 0 0 0.2rem 0;
+}
+
+.profile-value { /*ข้อความที่ได้*/
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
+    word-break: break-word;
+}
+
+.status-dot { /*ทำวงกลม (เพื่อไรไม่รู้ เท่ดี)*/
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    background-color: #4CAF50;
+}
+
+
+
+
+/* -------------------- รายการห้อง / บริการ -------------------- */
+.services-grid { /*จัดตำแหน่ง card*/
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.room-card { /*card*/
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #eee;
+}
+
+.room-card:hover {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    transform: translateY(-3px);
+}
+
+.room-header{ /*จัดตำแหน่งหัวข้อ*/
+    margin-bottom: 0.7rem;
+}
+
+.room-title { /*หัว*/
+    font-size: 1.2rem;
+    color: #723408;
+    margin: 0 0 0.5rem 0;
+}
+
+.room-subtitle { /*หัวรอง*/
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.setPic { /*รูป*/
+    margin-bottom: 1rem;
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+}
+
+.room-features-list { /*จัดระเบียบ list*/
+    list-style-type: disc; /* สร้างจุด */
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.room-feature { /*list*/
+    margin-bottom: 0.75rem;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.room-feature::marker {
+    color: #555; /* สีของจุดเท่านั้น */
+}
+
+.room-link-button { /*ปุ่มไปดูรายละเอียดห้อง*/
+    padding: 0.75rem 1.5rem;
+    background-color: #8B4513;
+    color: white;
+    border-radius: 4px;
+    font-weight: 500;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+.room-link-button:hover {
+    background-color: #6B3103;
+}
+
+
+
+/* -------------------- list ข้อมูลเพิ่มเติม-------------------- */
+.info-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.info-item {
+    margin-bottom: 1rem;
+    color: #555;
+    display: flex;
+        align-items: center;
+    padding: 12px 15px;
+    background-color: #f7f5f2;
+    border-left: 3px solid #723408;
+}
+
+
+.info-item:last-child { /*ทำให้ตัวสุดท้าย ลดที่ว่างด้านล่าง*/
+    margin-bottom: 0;
+}
+
+
+
+/* -------------------- ไอคอนในบรรทัดข้อความ -------------------- */
+.inline-icon {
+    margin-right: 8px;
+    color: #723408;
+}
+
+
+
+/* ------------------- loading screen -------------------- */
+.loading-screenHome {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    border: 12px solid black;
+    border-right-color: aquamarine;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+  

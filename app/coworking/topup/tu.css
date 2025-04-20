@@ -1,0 +1,258 @@
+
+
+.tu-page {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #f9f9f9;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+
+.tu-loading {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  border: 12px solid black;
+  border-right-color: aquamarine;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+      transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.tu-loading-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 15px 30px;
+  border-radius: 8px;
+}
+
+/* Navigation */
+.tu-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tu-back {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.tu-balance {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.tu-balance-label {
+  color: #fff;
+  font-weight: 500;
+  margin-right: 5px;
+}
+
+.tu-balance-value {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Content */
+.tu-content {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.tu-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.tu-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.tu-error {
+  margin-bottom: 20px;
+  background-color: #fee2e2;
+  border: 1px solid #f87171;
+  color: #b91c1c;
+  padding: 12px 16px;
+  border-radius: 4px;
+}
+
+.tu-success {
+  margin-bottom: 20px;
+  background-color: #d1fae5;
+  border: 1px solid #34d399;
+  color: #047857;
+  padding: 12px 16px;
+  border-radius: 4px;
+}
+
+.tu-selection {
+  margin-bottom: 20px;
+}
+
+.tu-label {
+  color: #4b5563;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.tu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.tu-amount {
+  padding: 12px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  text-align: center;
+  transition: background-color 0.2s;
+  background-color: white;
+  cursor: pointer;
+}
+
+.tu-amount:hover {
+  background-color: #f3f4f6;
+}
+
+.tu-amount.tu-selected {
+  background-color: #e0e7ff;
+  border-color: #a5b4fc;
+  color: #4338ca;
+}
+
+.tu-amount-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.tu-amount-text {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.tu-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9fafb;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  border: 1px solid #e5e7eb;
+}
+
+.tu-current-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 4px;
+  margin-top: 0;
+}
+
+.tu-current-value {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #374151;
+  margin: 0;
+}
+
+.tu-new-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 4px;
+  margin-top: 0;
+  text-align: right;
+}
+
+.tu-new-value {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #059669;
+  margin: 0;
+  text-align: right;
+}
+
+.tu-button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.tu-button.tu-disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.tu-button.tu-enabled {
+  background-color: #059669;
+}
+
+.tu-button.tu-enabled:hover {
+  background-color: #047857;
+}
+
+
+
+
+/* ----------- loading ----------- */
+
+.tu-loading {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  border: 12px solid black;
+  border-right-color: aquamarine;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+      transform: translate(-50%, -50%) rotate(360deg);
+  }
+}

@@ -1,0 +1,576 @@
+
+
+/* -------------------- พื้นหลังหน้า mta -------------------- */
+.Main-mta-page {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6)),
+        url('https://images.shopspotter.in.th/wp-content/uploads/2018/10/01160908/19575246_1427365940689356_8258018471836462615_o.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+
+
+/*--------------------- ไว้จัดหน้า page ---------------------*/
+.mta-container {
+    min-height: calc(100vh - 60px);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+/* -------------------- link กลับ home -------------------- */
+.mta-back-link-container {
+    margin-bottom: 1.5rem;
+}
+
+.mta-back-link {
+    color: #4fd1c5;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    width: fit-content;
+}
+
+.mta-back-link:hover {
+    color: #38b2ac;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+
+
+
+
+/* -------------------- จัดหัวข้อ กับ บอกเงิน -------------------- */
+.mta-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mta-page-title { /* หัวข้อ Meeting Room */
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.mta-page-subtitle { /* หัวข้อเล็กกว่า */
+    font-size: 1.25rem;
+    color: #e2e8f0;
+    margin: 0.5rem 0 0 0;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+
+/* ---------------- บอกเงิน ------------------ */
+.mta-balance-display { 
+    background: linear-gradient(135deg, #10b981, #059669);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.mta-balance-label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    font-weight: 500;
+}
+
+.mta-balance-amount {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0.25rem 0 0 0;
+}
+
+
+
+/* -------------------- ส่วนของ card -------------------- */
+.mta-info-card {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+.mta-info-card-content {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+    flex: 1;
+    min-width: 300px;
+}
+
+.mta-card-title { /* หััวข้อใน card */
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #4fd1c5;
+    display: inline-block;
+}
+
+.mta-feature-list { /* จัด list ในcard */
+    list-style-type: disc; /* สร้างจุด */
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+}
+
+.mta-feature-item { /*list*/
+    margin-bottom: 0.75rem;
+    color: #4a5568;
+    font-size: 1.05rem;
+    padding-left: 0.7rem;
+}
+
+.mta-feature-item::marker {
+    color: #4fd1c5; /* สีของจุดเท่านั้น */
+  }
+
+/* -------------------- รูปห้องด้ายนข้าง -------------------- */
+.mta-room-image {
+    width: 50%; /* Change from 1% to a reasonable size like 40% */
+    height: 50%;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+    margin-left: 50px;
+    margin-top: 50px;
+}
+
+.mta-room-image:hover {
+    transform: scale(1.02);
+}
+
+
+
+
+/* -------------------- สำหรับเลือกวันเวลา -------------------- */
+.mta-info-card2 { /* cardนะะะะะะะะะะะ */
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 2rem;
+    padding-bottom: 0rem;
+    margin-bottom: 2rem;
+}
+
+.mta-form-grid { /* จัดตำแหน่ง content ใน card */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.mta-label-time,.mta-label-day { /* หัวข้อ */
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+}
+
+.mta-day-input,.mta-time-select { /* กล่องใส่วันเวลา */
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.mta-day-input:focus,.mta-time-select:focus {
+    outline: none;
+    border-color: #4fd1c5;
+    box-shadow: 0 0 0 3px rgba(79, 209, 197, 0.3);
+}
+
+.mta-hint {
+    margin-top: 0.7rem;
+    font-size: 0.875rem;
+    color: #718096;
+    font-style: italic;
+    margin-bottom: 0rem;
+}
+
+
+
+
+
+
+
+/* ------------------------- จองห้อง -------------------------*/
+.mta-section-title { /* */
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 1.5rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    display: inline-block;
+}
+
+.mta-room-grid { /*จัดตำแหน่ง card*/
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.mta-room-card { /*พื้น card*/
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mta-room-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+
+.mta-room-card-content {
+    padding: 1.75rem;
+}
+
+/* ทั้งหมดนี้อยู่ใน card กับ padding: 1.75rem; แล้ว */
+.mta-room-name { /*ชื่อห้อง*/
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+}
+
+.mta-room-description { /*หนื้อหาเฉยๆ*/
+    color: #4a5568;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+}
+
+.mta-room-details { /*จัดรูปแบบข้อมูล (ดึงมาจากdb)*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    color: #4a5568;
+    margin-bottom: 1.5rem;
+    padding: 0.75rem 0;
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.mta-room-actions { /*จัดตำแหน่งปุ่ม กับ บอกสถานะ*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+/* --------------- บอกสถานะ --------------- */
+.mta-status-badge { /*รุปแบบ*/
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.mta-status-available {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: #047857;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.mta-status-unavailable {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #b91c1c;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* --------------- ความจุ --------------- */
+.mta-booking-button {  
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 500;
+    background: linear-gradient(135deg, #4fd1c5, #38b2ac);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(56, 178, 172, 0.3);
+}
+
+.mta-booking-button:hover {
+    background: linear-gradient(135deg, #38b2ac, #319795);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(56, 178, 172, 0.4);
+}
+
+.mta-button-disabled {
+    background: linear-gradient(135deg, #9ca3af, #6b7280);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.mta-button-disabled:hover {
+    background: linear-gradient(135deg, #9ca3af, #6b7280);
+    transform: none;
+    box-shadow: none;
+}
+
+
+
+/* ----------------- ยืนยันการจอง ----------------- */
+.mta-modal-overlay {
+    position: fixed;
+    inset: 0; /*ให้พื้นหลังใหม่คลุมทั้งหน้า*/
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+        align-items: center;
+        justify-content: center;
+    backdrop-filter: blur(4px);
+}
+
+.mta-modal-container {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    max-width: 30rem;
+    width: 100%;
+    padding: 2rem;
+    animation: modalFadeIn 0.3s ease-out;
+    transform: translateY(-20px);
+}
+
+
+/* ----------------- หัวข้อใน card หลังกดจอง ----------------- */
+.mta-modal-title { /**/
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.mta-booking-details { /*กล่องรายละเอียดการจอง*/
+    background-color: #f8fafc;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+.mta-details-title { /*หัวข้อรายละเอียด*/
+    font-weight: 600;
+    color: #2d3748;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.mta-details-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    color: #4b5563;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    row-gap: 0.25rem;
+    column-gap: 1.5rem;
+  }
+
+.mta-detail-label { /*ตัวอักษรรายละเอียด*/
+    font-weight: 500;
+    color: #64748b;
+}
+
+.mta-payment-notice { /*บอกก่อนว่าหักเงินนะ*/
+    background-color: #fef3c7;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #fbbf24;
+    margin-bottom: 1.5rem;
+}
+
+.mta-payment-notice p { /*สำหรับตัวอักษรสีน้ำตาลบนกล่องเหลือง*/
+    color: #92400e;
+    font-size: 0.95rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+.mta-modal-actions { /*จัดตำแหน่งปุ่มยืนยัง/ยกเลิก*/
+    display: flex;
+    gap: 1rem;
+}
+
+.mta-confirm-button,.mta-cancel-button,.mta-ok-button { /*รูปแบบปุ่ม*/
+    flex: 1;
+    padding: 0.75rem 0;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+/* ----------- ปุ่มยืนยัน ----------- */
+.mta-confirm-button { 
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    box-shadow: 0 4px 6px rgba(5, 150, 105, 0.3);
+}
+
+.mta-confirm-button:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(5, 150, 105, 0.4);
+}
+
+.mta-confirm-button:disabled {
+    background: linear-gradient(135deg, #6ee7b7, #34d399);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* ----------- ปุ่มยกเลิก ----------- */
+.mta-cancel-button {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
+    transition: background-color 0.3s;
+}
+
+.mta-cancel-button:hover {
+    background-color: #e5e7eb;
+}
+
+
+.mta-success-message { /*จัดตำแหน่งอักษร*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.mta-success-title { /*จองสำเร็จแล้วว*/
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #10b981;
+    margin: 0;
+}
+
+.mta-success-notice { /*กล่องสีเขียว*/
+    background-color: #ecfdf5;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #a7f3d0;
+    margin-bottom: 1.5rem;
+}
+
+.mta-success-notice p { /*สำหรับข้อความสีเขียวบนกล่องสีเขียว*/
+    color: #065f46;
+    font-size: 0.95rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* ---------- ปุ่ม ok ----------- */
+.mta-ok-button {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    width: 100%;
+}
+
+.mta-ok-button:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+}
+
+
+
+
+/* ----------- loading ----------- */
+.loading-screenMta{
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    border: 12px solid black;
+    border-right-color: aquamarine;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+
+
+/*------------------------------------- เผื่อได้ใช้ ------------------------------------- */
+
+
+/* .mta-no-rooms-message {
+    background-color: rgba(251, 191, 36, 0.2);
+    border: 1px solid #fbbf24;
+    color: #92400e;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    text-align: center;
+} */
+
+
+/* .mta-error-alert {
+    margin-bottom: 1.5rem;
+    background-color: #fee2e2;
+    border: 1px solid #ef4444;
+    color: #b91c1c;
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+} */
