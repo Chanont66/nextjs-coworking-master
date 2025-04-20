@@ -1,11 +1,11 @@
 'use client'
 
-import './login.css'
+
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation' // เพื่อใช้ ส่งข้อมูลไปหน้าอื่นๆด้วย
 import Link from 'next/link' // ใช้สำหรับลิงค์ไปหน้าอื่นเฉยๆ
 
-
+import './login.css'
 // npm install react-icons
 import { FaEye, FaEyeSlash ,FaLock, FaUser } from "react-icons/fa";
 
