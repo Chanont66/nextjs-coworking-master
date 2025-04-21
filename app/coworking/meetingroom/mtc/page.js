@@ -348,7 +348,7 @@ export default function MeetingRoomTypeC() {
             
             <div>
               <h3 className="mtc-card-title">รายละเอียดห้องประชุม</h3>
-              <div className="mtc-feature-list">
+              <ul className="mtc-feature-list">
                 <li className="mtc-feature-item">ความจุ 20 คน</li>
                 <li className="mtc-feature-item">โต๊ะประชุมทรงสี่เหลี่ยมผืนผ้าขนาดใหญ่</li>
                 <li className="mtc-feature-item">จอแสดงผล 75 นิ้ว</li>
@@ -356,15 +356,15 @@ export default function MeetingRoomTypeC() {
                 <li className="mtc-feature-item">ระบบเสียงรอบทิศทาง</li>
                 <li className="mtc-feature-item">wifi ความเร็วสูง</li>
                 <li className="mtc-feature-item">บริการเครื่องดื่มและอาหารว่าง</li>
-              </div>
+              </ul>
 
               <h3 className="mtc-card-title">ข้อมูลเพิ่มเติม</h3>
               
-              <div className="mtc-feature-list">
+              <ul className="mtc-feature-list">
                 <li className="mtc-feature-item">สามารถจองล่วงหน้าได้สูงสุด 30 วัน </li>
                 <li className="mtc-feature-item">ทุกห้องมีเครื่องรับอากาศและอุปกรณ์เครื่องเสียง</li>
                 <li className="mtc-feature-item">มีบริการช่วยเหลือด้านเทคนิคตลอดเวลาทำการ</li>
-              </div>
+              </ul>
             </div>
 
             <img src="https://uppic.cloud/ib/AtAVoZjD1yUyRXV_1745127744.jpg" className="mtc-room-image" />
@@ -483,12 +483,14 @@ export default function MeetingRoomTypeC() {
                 
                 <div className="mtc-booking-details"> {/* /*กล่องรายละเอียดการจอง*/}
                   <h4 className="mtc-details-title">รายละเอียดการจอง</h4>
+                  
                   <ul className="mtc-details-list">
                     <li className="mtc-detail-label">ห้องประชุม: {selectedRoom.Room_Number}</li>
                     <li className="mtc-detail-label">วันที่: {formatDate(selectedDate)}</li>
                     <li className="mtc-detail-label">ช่วงเวลา:   {getSelectedTimeSlotName()}</li>
                     <li className="mtc-detail-label">ราคา:   ฿{Number(calculatePrice(selectedRoom.Price, selectedTimeSlot)).toFixed(0)}</li>
                   </ul>
+                  
                 </div>
               
                 <div className="mtc-payment-notice"> {/* หล่องสีเหลืองข้อมความน้ำตาล */}

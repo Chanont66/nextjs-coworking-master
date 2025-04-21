@@ -340,7 +340,7 @@ export default function MeetingRoomTypeB() {
 
             <div>
               <h3 className="mtb-card-title">รายละเอียดห้องประชุม</h3>
-              <div className="mtb-feature-list">
+              <ul className="mtb-feature-list">
                 <li className="mtb-feature-item">ความจุ 14 คน</li>
                 <li className="mtb-feature-item">โต๊ะประชุมทรงสี่เหลี่ยมกับเก้าอี้</li>
                 <li className="mtb-feature-item">จอแสดงผล 65 นิ้ว</li>
@@ -348,15 +348,15 @@ export default function MeetingRoomTypeB() {
                 <li className="mtb-feature-item">wifi ความเร็วสูง</li>
                 <li className="mtb-feature-item">ระบบประชุมทางไกล</li>
                 <li className="mtb-feature-item">ไวท์บอร์ดขนาดใหญ่</li>
-              </div>
+              </ul>
 
               <h3 className="mtb-card-title">ข้อมูลเพิ่มเติม</h3>
 
-              <div className="mtb-feature-list">
+              <ul className="mtb-feature-list">
                 <li className="mtb-feature-item">สามารถจองล่วงหน้าได้สูงสุด 30 วัน</li>
                 <li className="mtb-feature-item">ทุกห้องมีเครื่องปรับอากาศและอุปกรณ์เครื่องเสียง</li>
                 <li className="mtb-feature-item">มีบริการช่วยเหลือด้านเทคนิคตลอดเวลาทำการ</li>
-              </div>
+              </ul>
             </div>
 
             <img src="https://uppic.cloud/ib/Ifsy8egbN6jK1dD_1745125999.jpg" className="mtb-room-image" />
@@ -368,6 +368,7 @@ export default function MeetingRoomTypeB() {
            <h3 className="mtb-card-title">เลือกวันและเวลา</h3> {/* หัวข้อ */}
           
           <div className="mtb-form-grid">
+            
             <div>
               <label htmlFor="bookingDate" className="mtb-label-day">
                 วันที่ต้องการจอง
@@ -474,12 +475,14 @@ export default function MeetingRoomTypeB() {
                 
                 <div className="mtb-booking-details"> {/* /*กล่องรายละเอียดการจอง*/}
                   <h4 className="mtb-details-title">รายละเอียดการจอง</h4>
+                  
                   <ul className="mtb-details-list">
                     <li className="mtb-detail-label">ห้องประชุม: {selectedRoom.Room_Number}</li>
                     <li className="mtb-detail-label">วันที่: {formatDate(selectedDate)}</li>
                     <li className="mtb-detail-label">ช่วงเวลา:   {getSelectedTimeSlotName()}</li>
                     <li className="mtb-detail-label">ราคา:   ฿{Number(calculatePrice(selectedRoom.Price, selectedTimeSlot)).toFixed(0)}</li>
                   </ul>
+
                 </div>
               
                 <div className="mtb-payment-notice"> {/* หล่องสีเหลืองข้อมความน้ำตาล */}

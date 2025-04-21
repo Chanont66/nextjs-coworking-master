@@ -132,7 +132,7 @@
 .mtc-feature-list { /* จัด list ในcard */
     list-style-type: disc; /* สร้างจุด */
     padding: 0;
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 1.5rem 1.5rem;
 }
 
 .mtc-feature-item { /*list*/

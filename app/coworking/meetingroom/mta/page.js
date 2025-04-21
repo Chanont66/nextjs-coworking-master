@@ -330,22 +330,22 @@ export default function MeetingRoomTypeA() {
             
             <div>
               <h3 className="mta-card-title">รายละเอียดห้องประชุม</h3>
-              <div className="mta-feature-list">
+              <ul className="mta-feature-list">
                 <li className="mta-feature-item">ความจุ 8 คน</li>
                 <li className="mta-feature-item">โต๊ะประชุมทรงสี่เหลี่ยมกับเก้าอี้</li>
                 <li className="mta-feature-item">จอแสดงผล 55 นิ้ว</li>
                 <li className="mta-feature-item">ระบบเสียงคุณภาพสูง</li>
                 <li className="mta-feature-item">wifi ความเร็วสูง</li>
                 <li className="mta-feature-item">ระบบประชุมทางไกล</li>
-              </div>
+              </ul>
 
               <h3 className="mta-card-title">ข้อมูลเพิ่มเติม</h3>
               
-              <div className="mta-feature-list">
+              <ul className="mta-feature-list">
                 <li className="mta-feature-item">สามารถจองล่วงหน้าได้สูงสุด 30 วัน </li>
                 <li className="mta-feature-item">ทุกห้องมีเครื่องรับอากาศและอุปกรณ์เครื่องเสียง</li>
                 <li className="mta-feature-item">มีบริการช่วยเหลือด้านเทคนิคตลอดเวลาทำการ</li>
-              </div>
+              </ul>
             </div>
 
             <img src="https://uppic.cloud/ib/jQDKTvs0cLelFWA_1744981465.jpg" className="mta-room-image" />
@@ -464,12 +464,14 @@ export default function MeetingRoomTypeA() {
                 
                 <div className="mta-booking-details"> {/* /*กล่องรายละเอียดการจอง*/}
                   <h4 className="mta-details-title">รายละเอียดการจอง</h4>
+                  
                   <ul className="mta-details-list">
                     <li className="mta-detail-label">ห้องประชุม: {selectedRoom.Room_Number}</li>
                     <li className="mta-detail-label">วันที่: {formatDate(selectedDate)}</li>
                     <li className="mta-detail-label">ช่วงเวลา:   {getSelectedTimeSlotName()}</li>
                     <li className="mta-detail-label">ราคา:   ฿{Number(calculatePrice(selectedRoom.Price, selectedTimeSlot)).toFixed(0)}</li>
                   </ul>
+                  
                 </div>
               
                 <div className="mta-payment-notice"> {/* หล่องสีเหลืองข้อมความน้ำตาล */}

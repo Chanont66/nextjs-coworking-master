@@ -143,7 +143,7 @@
 .mtb-feature-list { /* จัด list ในcard */
     list-style-type: disc; /* สร้างจุด */
     padding: 0;
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 1.5rem 1.5rem;
 }
 
 .mtb-feature-item { /*list*/
@@ -211,7 +211,7 @@
 }
 
 .mtb-day-input:focus,.mtb-time-select:focus {
-    outline: none;
+    outline: none; /*ลบเส้นใต้ตัวหนังสือ*/
     border-color: #4fd1c5;
     box-shadow: 0 0 0 3px rgba(79, 209, 197, 0.3);
 }

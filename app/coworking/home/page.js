@@ -16,12 +16,13 @@ export default function CoworkingHomePage() {
 
   const [showConfirmation, setShowConfirmation] = useState(false); // ไว้ show confrim logout
   
+
   useEffect(() => {
     // ตรวจสอบข้อมูลผู้ใช้จาก localStorage เมื่อโหลดหน้า
     const checkAuth = () => {
       const userData = localStorage.getItem('user')
-      if (!userData) {
-        // ถ้าไม่มีข้อมูลผู้ใช้ (ยังไม่ล็อกอิน) ให้กลับไปที่หน้าล็อกอิน
+      
+      if (!userData) { // ถ้าไม่มีข้อมูลผู้ใช้ (ยังไม่ล็อกอิน) ให้กลับไปที่หน้าล็อกอิน
         router.push('/coworking')
       } else {
         try {
@@ -40,16 +41,15 @@ export default function CoworkingHomePage() {
           router.push('/coworking')
         }
       }
-      setLoading(false)
+      setLoading(false) // ปิดเพราะตอนแรกมันเปิดอยู่ พอเช็คผู้ใช้ได้แล้วก็จะหยุด
     }
-    
     checkAuth()
   }, [router])
 
+  
   const handleLogout = () => {
     localStorage.removeItem('user') // ล้างข้อมูลผู้ใช้จาก localStorage
-    router.push('/coworking')
-    setShowConfirmation(false);
+    router.push('/coworking') // กลับหน้าlogin
   }
 
  
@@ -74,9 +74,7 @@ export default function CoworkingHomePage() {
             <div className="nav-container"> {/* 5 */}
 
             <nav className="nav-menu">
-              <Link href="/coworking/topup/history" className="nav-link">
-                Topup History
-              </Link>
+              <Link href="/coworking/topup/history" className="nav-link"> Topup History </Link>
             </nav>
             
             {/* <nav className="nav-menu">
@@ -199,14 +197,14 @@ export default function CoworkingHomePage() {
                 
                 <img src="https://uppic.cloud/ib/jQDKTvs0cLelFWA_1744981465.jpg" className="setPic" />
 
-                <div className="room-features-list">
+                <ul className="room-features-list">
                   <li className="room-feature">ความจุ 8 คน</li>
                   <li className="room-feature">โต๊ะประชุมทรงสี่เหลี่ยมผืนผ้า</li>
                   <li className="room-feature">จอแสดงผล 55 นิ้ว</li>
                   <li className="room-feature">ระบบเสียงคุณภาพสูง</li>
                   <li className="room-feature">wifi ความเร็วสูง</li>
                   <li className="room-feature">ระบบประชุมทางไกล</li>
-                </div>
+                </ul>
 
                 <button onClick={() => window.location.href = "/coworking/meetingroom/mta"} className="room-link-button">
                   จองห้องประชุม
@@ -223,14 +221,14 @@ export default function CoworkingHomePage() {
                 
                 <img src="https://uppic.cloud/ib/rMn9A1xD3lSDE4y_1744981466.jpg" className="setPic" />
 
-                <div className="room-features-list">
+                <ul className="room-features-list">
                   <li className="room-feature">ความจุ 14 คน</li>
                   <li className="room-feature">โต๊ะประชุมทรงตัวยู</li>
                   <li className="room-feature">จอแสดงผล 65 นิ้ว</li>
                   <li className="room-feature">wifi ความเร็วสูง</li>
                   <li className="room-feature">ระบบประชุมทางไกล</li>
                   <li className="room-feature">บริการเครื่องดื่ม</li>
-                </div>
+                </ul>
 
                 <button onClick={() => window.location.href = "/coworking/meetingroom/mtb"} className="room-link-button">
                   จองห้องประชุม
@@ -247,14 +245,14 @@ export default function CoworkingHomePage() {
                 
                 <img src="https://uppic.cloud/ib/73bG9uxVY6pgl06_1744981466.jpg" className="setPic" />
 
-                <div className="room-features-list">
+                <ul className="room-features-list">
                   <li className="room-feature">ความจุ 20 คน</li>
                   <li className="room-feature">โต๊ะประชุมทรงสี่เหลี่ยมผืนผ้าขนาดใหญ่</li>
                   <li className="room-feature">จอแสดงผล 75 นิ้ว</li>
                   <li className="room-feature">ระบบประชุมทางไกลคุณภาพสูง</li>
                   <li className="room-feature">ระบบเสียงรอบทิศทาง</li>
                   <li className="room-feature">บริการเครื่องดื่มและอาหารว่าง</li>
-                </div>
+                </ul>
 
                 <button onClick={() => window.location.href = "/coworking/meetingroom/mtc"} className="room-link-button">
                   จองห้องประชุม
