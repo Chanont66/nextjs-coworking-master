@@ -10,89 +10,111 @@ import './mta.css'
 
 export default function MeetingRoomTypeA() {
   const router = useRouter()
-  const [rooms, setRooms] = useState([])
-  const [timeSlots, setTimeSlots] = useState([])
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState('')
-  const [selectedDate, setSelectedDate] = useState('')
-  const [selectedRoom, setSelectedRoom] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [user, setUser] = useState(null)
-  const [showConfirmModal, setShowConfirmModal] = useState(false)
-  const [bookingInProgress, setBookingInProgress] = useState(false)
-  const [bookingSuccess, setBookingSuccess] = useState(false)
-  const [bookingError, setBookingError] = useState(null)
+  const [rooms, setRooms] = useState([]) // เก็บห้องทั้งหมด
 
-  // วันที่ขั้นต่ำและสูงสุดที่สามารถจองได้
+  const [timeSlots, setTimeSlots] = useState([]) // เก็บช่วงเวลาทั้งหมดที่ได้จาก api
+  
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState('') // อัพเดทช่วงเวลาที่เลือก
+  const [selectedDate, setSelectedDate] = useState('') // อัพเดทวันที่เลือก
+  const [selectedRoom, setSelectedRoom] = useState(null) // อัพเดทห้องที่เลือก
+
+  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null)
+
+  const [showConfirmModal, setShowConfirmModal] = useState(false)
+
+  const [bookingInProgress, setBookingInProgress] = useState(false) // ไว้เปิดปิดปุ่มยืนยันจอง
+  const [bookingSuccess, setBookingSuccess] = useState(false) // หน้าต่างยืนยันหลังจองสำเร็จ
+ 
+
+  // วันที่ปัจจุบันและสูงสุดที่สามารถจองได้
   const today = new Date()
   const minDate = today.toISOString().split('T')[0]
   const maxDate = new Date(today.setDate(today.getDate() + 30)).toISOString().split('T')[0]
 
+
+  // ----------------------- เช็คข้อมูล และดึงวันเวลา -----------------
   useEffect(() => {
-    // ตรวจสอบการล็อกอิน - แก้ไขให้ทำงานเฉพาะในฝั่ง client
-    if (typeof window !== 'undefined') {
+    // ดึงข้อมูลจาก localStorage
+    const checkAuth = () => { 
       try {
-        const storedUser = localStorage.getItem('user')
-        if (storedUser) {
-          setUser(JSON.parse(storedUser))
+        const storedUser = localStorage.getItem('user') // ดึงข้อมูลผู้ใช้ใน localStorage จากตัวแปร user
+        
+        if (storedUser) { // ถ้ามีข้อมูล
+          const parsedUser = JSON.parse(storedUser) // แปลงข้อมูลที่เป็น string ในรูปแบบ JSON เป็น object
+          setUser(parsedUser) // เก็บข้อมูล (ก็เรียกใช้ user.ต่างๆได้ละ)
+        } else { // ถ้าไม่มี
+          router.push('/coworking')
         }
       } catch (err) {
-        console.error('Error accessing localStorage:', err)
+        localStorage.removeItem('user') // ลบไว้กัน error เผื่อข้อมูลผิด
+        router.push('/coworking')
       }
     }
-    
-    // ดึงข้อมูลช่วงเวลาและตั้งค่าเริ่มต้น (จะทำแค่ครั้งแรกเท่านั้น)
+  
+
+    // ดึงข้อมูลช่วงเวลาและตั้งค่าเริ่มต้นจาก api นะ
     const fetchInitialData = async () => {
       try {
-        // ดึงข้อมูลช่วงเวลา
-        const timeSlotsResponse = await fetch('/api/timeslots')
-        if (!timeSlotsResponse.ok) {
-          throw new Error('ไม่สามารถดึงข้อมูลช่วงเวลาได้')
-        }
-        const timeSlotsData = await timeSlotsResponse.json()
+        const timeSlotsResponse = await fetch('/api/timeslots') // ขอ request 
         
+        if (!timeSlotsResponse.ok) {
+          alert('ไม่สามารถดึงข้อมูลช่วงเวลาได้')
+        }
+        const timeSlotsData = await timeSlotsResponse.json() // แปลง object
+        
+        // ตั้งค่าช่วงเวลา timeSlot (เอาข้อมูลจาก timeSlotsData เก็บใน timeSlots จะได้่ใช้ timeSlots.ต่างๆได้)
         setTimeSlots(timeSlotsData.timeSlots || [])
-        if (timeSlotsData.timeSlots && timeSlotsData.timeSlots.length > 0 && !selectedTimeSlot) {
+        if (timeSlotsData.timeSlots && timeSlotsData.timeSlots.length > 0 && !selectedTimeSlot) 
+        {
           setSelectedTimeSlot(timeSlotsData.timeSlots[0].Time_Slot_ID.toString() || '')
         }
-        if (!selectedDate) {
-          setSelectedDate(minDate) // ตั้งค่าวันที่เริ่มต้นเป็นวันนี้
-        }
+
+      // ตั้งค่าวัน(แค่ครั้งแรกที่มาเท่านั้นที่จะใช้ minDate)
+        if (!selectedDate) { setSelectedDate(minDate) }
+      
       } catch (err) {
-        console.error('Error fetching timeslots:', err)
-        setError('ไม่สามารถโหลดข้อมูลช่วงเวลา กรุณาลองใหม่อีกครั้ง')
+        alert('ไม่สามารถโหลดข้อมูลช่วงเวลา กรุณาลองใหม่อีกครั้ง')
       }
     }
-    
+
+    checkAuth()
     fetchInitialData()
-  }, [minDate]) // ทำงานครั้งแรกเท่านั้น
+  }, [minDate]) // ให้สองฟังก์ชั่นนี้ทำงานทุกครั้งที่ minDate เปลี่ยน
+
+  // ----------------------- เช็คข้อมูล และดึงวันเวลา -----------------
+
+
   
-  // แยกการดึงข้อมูลห้องเป็นอีก useEffect หนึ่ง ซึ่งจะทำงานเมื่อวันที่หรือช่วงเวลาเปลี่ยน
+  // ----------------------- ดึงห้อง -----------------
   useEffect(() => {
     // ดึงข้อมูลห้องประชุม
     const fetchRooms = async () => {
-      if (!selectedDate || !selectedTimeSlot) return; // ไม่ดึงข้อมูลถ้ายังไม่มีการเลือกวันที่หรือช่วงเวลา
-      
       try {
-        setLoading(true)
+        setLoading(true) // เปิดหน้าโหลด
         // ดึงข้อมูลห้องประชุมประเภท A พร้อมส่งวันที่และช่วงเวลาที่เลือก
         const roomsResponse = await fetch(`/api/rooms?type=Type%20A&date=${selectedDate}&timeSlot=${selectedTimeSlot}`)
-        if (!roomsResponse.ok) {
+
+        if (!roomsResponse.ok) { // ถ้าไม่มีข้อมูล
           throw new Error('ไม่สามารถดึงข้อมูลห้องประชุมได้')
         }
+
         const roomsData = await roomsResponse.json()
-        
-        setRooms(roomsData.rooms || [])
+        setRooms(roomsData.rooms || []) // ข้อมูลห้อง
+      
       } catch (err) {
-        console.error('Error fetching rooms:', err)
-        setError('ไม่สามารถโหลดข้อมูลห้อง กรุณาลองใหม่อีกครั้ง')
+        alert('ไม่สามารถโหลดข้อมูลห้อง กรุณาลองใหม่อีกครั้ง')
+      
       } finally {
-        setLoading(false)
+        setLoading(false) // ปิดหน้าโหลด
       }
     }
     
     fetchRooms()
-  }, [selectedDate, selectedTimeSlot]) // ทำงานเมื่อวันที่หรือช่วงเวลาเปลี่ยน
+  }, [selectedDate, selectedTimeSlot]) // โหลดข้อมูลห้องใหม่ตอนที่ วันหรือเวลาที่เลือกเปลี่ยน เพราะแต่ละวันเวลาจองจะเปลี่ยนไปทำให้ห้องต้องว่างใหม่
+
+
+
 
   // คำนวณราคาตามช่วงเวลา
   const calculatePrice = (basePrice, slotId) => {
@@ -120,48 +142,35 @@ export default function MeetingRoomTypeA() {
     }
   }
 
-  // ฟังก์ชันเมื่อกดปุ่มจองห้อง
-  const handleBookingClick = (room) => {
-    if (!user) {
-      alert('กรุณาเข้าสู่ระบบก่อนทำการจอง')
-      router.push('/coworking/login')
-      return
-    }
+
+
+  // ---------------------- กดปุ่มจองห้องแล้วจะ... ----------------------
+  const handleBookingClick = (room) => { // รับ room,selectedTimeSlot,selectedDate,user ที่ถูกเลือก
     
-    if (!selectedTimeSlot) {
-      alert('กรุณาเลือกช่วงเวลาที่ต้องการจอง')
-      return
-    }
-    
-    if (!selectedDate) {
-      alert('กรุณาเลือกวันที่ต้องการจอง')
-      return
-    }
-    
-    // เช็คว่ามีเงินพอหรือไม่
+    // เช็คว่ามีเงินพอมั้ย
     const totalPrice = calculatePrice(room.Price, selectedTimeSlot)
     if (parseFloat(user.Balance) < totalPrice) {
       alert('ยอดเงินในกระเป๋าไม่เพียงพอ กรุณาเติมเงินก่อนทำการจอง')
       return
     }
     
-    // ตั้งค่าห้องที่เลือกและแสดงหน้าต่างยืนยัน
+    // เซตให้ SelectedRoom เก็บข้อมูลห้องที่เลือก
     setSelectedRoom(room)
-    setShowConfirmModal(true)
+    setShowConfirmModal(true) // เปิดหน้าต่างยืนยัน
   }
 
-  // ฟังก์ชันยกเลิกการจอง
+
+  // ---------------------- ฟังก์ชันยกเลิกการจอง ----------------------
   const handleCancelBooking = () => {
-    setShowConfirmModal(false)
-    setSelectedRoom(null)
-    setBookingError(null)
+    setShowConfirmModal(false) // ปิดหน้าต่าง
+    setSelectedRoom(null) 
   }
 
-  // ฟังก์ชันยืนยันการจอง
+
+  // ---------------------- ฟังก์ชันยืนยันการจอง ----------------------
   const handleConfirmBooking = async () => {
-    // แสดงว่ากำลังดำเนินการจอง
-    setBookingInProgress(true)
-    setBookingError(null)
+    
+    setBookingInProgress(true) // ปิดปุ่มไม่ให้กด
     
     try {
       // คำนวณราคาทั้งหมด
@@ -169,49 +178,51 @@ export default function MeetingRoomTypeA() {
       
       // เตรียมข้อมูลที่จะส่ง - ส่งข้อมูลผู้ใช้ไปด้วยเพื่อไม่ต้องใช้ localStorage ในฝั่ง server
       const bookingData = {
-        userId: user.User_ID,
-        roomId: selectedRoom.Room_ID,
+        userId: user.User_ID, // ใช้ User_ID บอกว่าใครจองห้องไหน
+        roomId: selectedRoom.Room_ID, // roomid ก็บอก id ห้อง
         timeSlotId: parseInt(selectedTimeSlot),
         bookingDate: selectedDate,
         totalPrice: totalPrice,
         user: user // ส่งข้อมูลผู้ใช้ไปด้วย
-      };
+      }
       
-      console.log('Sending booking data:', bookingData);
       
       // ส่งข้อมูลไปยัง API เพื่อสร้างการจองและบันทึกลงฐานข้อมูล
-      const response = await fetch('/api/bookings/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(bookingData),
+      const response = await fetch('/api/bookings/create', { // ขอ request 
+        method: 'POST', // POST = ส่งข้อมูลไป
+        headers: { 'Content-Type': 'application/json' }, // ให้ส่งไปเป็น JSON
+        body: JSON.stringify(bookingData), // แปลง formData เป็น JSON
       })
       
       // ตรวจสอบว่ามีข้อผิดพลาดหรือไม่
       if (!response.ok) {
-        let errorMessage = 'ไม่สามารถจองห้องประชุมได้';
-        
-        // อ่าน response เป็นข้อความก่อน
-        const responseText = await response.text();
+        // อ่านข้อความ error จาก response
+        const responseText = await response.text()
+        let errorMessage = 'ไม่สามารถจองห้องประชุมได้'
         
         try {
-          // ลองแปลงเป็น JSON
-          const errorData = JSON.parse(responseText);
-          errorMessage = errorData.error || errorMessage;
+          const errorData = JSON.parse(responseText) // ลองแปลงเป็น JSON
+          if (errorData.error) {
+            errorMessage = errorData.error
+          }
         } catch (e) {
           // ถ้าไม่ใช่ JSON ใช้ข้อความที่ได้มา
-          errorMessage = responseText || errorMessage;
+          if (responseText) {
+            errorMessage = responseText
+          }
         }
         
-        throw new Error(errorMessage);
+        // แสดงข้อความ error แทนการ throw error
+        alert(errorMessage)
+        return // จบการทำงานฟังก์ชันตรงนี้
       }
-
+  
       // ถ้าสำเร็จ แปลงข้อมูลที่ได้รับกลับมา
-      const responseText = await response.text();
-      const data = JSON.parse(responseText);
+      const responseText = await response.text()
+      const data = JSON.parse(responseText)
         
-      // อัพเดท localStorage ด้วยข้อมูลผู้ใช้ที่อัพเดทแล้ว - แก้ไขให้ตรวจสอบก่อนเรียกใช้
+      // --------------------------------------------------------
+      // อัพเดท localStorage ด้วยว่าจองแล้วเงินลดแล้ว
       if (typeof window !== 'undefined' && data.user) {
         try {
           localStorage.setItem('user', JSON.stringify(data.user))
@@ -220,21 +231,21 @@ export default function MeetingRoomTypeA() {
         }
       }
       
-      // อัพเดทข้อมูลผู้ใช้ในหน้า
-      if (data.user) {
-        setUser(data.user)
-      }
+      if (data.user) { setUser(data.user) } // ต้องอัพเดทเงินในกระเป๋า
+      // --------------------------------------------------------
       
-      // แสดงการจองสำเร็จ
-      setBookingSuccess(true)
+      setBookingSuccess(true) // แสดงการจองสำเร็จ
       
     } catch (err) {
+      alert('เกิดข้อผิดพลาดในการจองห้องประชุม กรุณาลองใหม่อีกครั้ง')
       console.error('Booking error:', err)
-      setBookingError(err.message || 'เกิดข้อผิดพลาดในการจองห้องประชุม กรุณาลองใหม่อีกครั้ง')
+    
     } finally {
-      setBookingInProgress(false)
+      setBookingInProgress(false) // เสร็จแล้วเปิดปุ่มได้
     }
   }
+
+
 
   // ฟังก์ชันปิดหน้าต่างยืนยันหลังจากจองสำเร็จ
   const handleCloseSuccessModal = () => {
@@ -246,19 +257,22 @@ export default function MeetingRoomTypeA() {
     const fetchRooms = async () => {
       try {
         const roomsResponse = await fetch(`/api/rooms?type=Type%20A&date=${selectedDate}&timeSlot=${selectedTimeSlot}`)
+        
         if (!roomsResponse.ok) {
           throw new Error('ไม่สามารถดึงข้อมูลห้องประชุมได้')
         }
         const roomsData = await roomsResponse.json()
         setRooms(roomsData.rooms || [])
+      
       } catch (err) {
-        console.error('Error fetching rooms:', err)
+        alert('เกิดข้อผิดพลาดในการดึงข้อมูลห้องประชุม กรุณาลองใหม่อีกครั้ง')
       }
-    }
-    
+    } 
     fetchRooms()
   }
 
+  
+  // ดึงข้อมูลเวลาที่จอง
   const getSelectedTimeSlotName = () => {
     const slot = timeSlots.find(slot => slot.Time_Slot_ID === parseInt(selectedTimeSlot))
     return slot ? `${slot.Slot_Name} (${slot.Start_Time.substring(0, 5)} - ${slot.End_Time.substring(0, 5)})` : ''
@@ -276,32 +290,12 @@ export default function MeetingRoomTypeA() {
 
 
 
-
-
-
+  // หน้าจอโหลด (ซึ่งมันเร็วมากกกกกกกกกกกกกกกก)
   if (loading) {
     return (
       <div className="loading-screenMta"></div>
     )
   }
-
-  // if (error) {
-  //   return (
-  //     <div className="error-container">
-  //       <div className="error-message">
-  //         <p>{error}</p>
-  //         <button 
-  //           onClick={() => window.location.reload()} 
-  //           className="retry-button"
-  //         >
-  //           ลองใหม่
-  //         </button>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
-
 
   return (
     <div className="Main-mta-page">
@@ -367,7 +361,7 @@ export default function MeetingRoomTypeA() {
                 id="bookingDate"
                 name="bookingDate"
                 value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
+                onChange={(e) => setSelectedDate(e.target.value)} // อัพเดทวันที่เลือก
                 min={minDate}
                 max={maxDate}
                 className="mta-day-input"
@@ -383,7 +377,7 @@ export default function MeetingRoomTypeA() {
               <select
                 id="timeSlot"
                 value={selectedTimeSlot}
-                onChange={(e) => setSelectedTimeSlot(e.target.value)}
+                onChange={(e) => setSelectedTimeSlot(e.target.value)} // อัพเดทช่วงเวลาที่เลือก
                 className="mta-time-select"
               >
                 {timeSlots.map((slot) => (
@@ -399,50 +393,49 @@ export default function MeetingRoomTypeA() {
         
         
         
-        
-        {/* จองงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงงง */}
+        {/* Note: 
+          rooms คือ array ที่เก็บ object ทั้งหมด
+          room คือตัวแปรที่รับแต่ละ object จากการ map ของ rooms 
+        */}
+
+        {/* ------------ ส่วนจองงงงงงงงงงงงงงงงงงงง ------------  */}
         <h3 className="mta-section-title">ห้องที่ว่าง</h3>
         
-        <div className="mta-room-grid"> {/* ตำแหน่ง card */}
-          {rooms.map((room) => (
-            <div key={room.Room_ID} className="mta-room-card"> {/*รูปแบบcard*/}
+        <div className="mta-room-grid">
+          {rooms.map((room) => ( // mapแสดงทุกห้องที่มีข้อมูลจากตัวแปร rooms ที่ดึงมา
+            <div key={room.Room_ID} className="mta-room-card"> {/* ดึง id ห้อง */}
               
-              <div className="mta-room-card-content"> {/*padding*/}
+              <div className="mta-room-card-content"> 
 
-                <h4 className="mta-room-name">{room.Room_Number}</h4> {/*ชื่อห้อง*/}
-                <p className="mta-room-description">{room.Description}</p> {/*เนื้อหา*/}
+                <h4 className="mta-room-name">{room.Room_Number}</h4> {/* ดึงเลขห้อง */}
+                <p className="mta-room-description">{room.Description}</p>  {/* ดึงคำอธิบาย */}
                 
-                <div className="mta-room-details"> {/*จัดรูปแบบ*/}
+                <div className="mta-room-details"> {/* ดึงรายละเอียดห้อง */}
                   <span>ความจุ: {room.Capacity} คน</span>
                   <span>ราคา: ฿{Number(calculatePrice(room.Price, selectedTimeSlot)).toFixed(0)}</span>
                 </div>
 
-                <div className="mta-room-actions"> {/*จัดตำแหน่ง*/}
+                <div className="mta-room-actions"> {/* เช็คstatus */}
                   <span className={`mta-status-badge 
                     ${room.Status === 'Available' ? 'mta-status-available' : 'mta-status-unavailable'}`}>
                     {room.Status === 'Available' ? 'ว่าง' : 'ไม่ว่าง'}
                   </span>
 
-                  {/* ปุ่มจอง */}
+                  {/* --------- ปุ่มจอง --------- */}
                   <button
                     onClick={() => handleBookingClick(room)}
                     disabled={room.Status !== 'Available'}
+                    // อันนี้เช็คว่าถ้า """"ไม่เท่ากับ""""" available ให้ปุ่มไม่สามารถกดได้
                     className={`mta-booking-button ${room.Status !== 'Available' ? 'mta-button-disabled' : ''}`}
                   >
                     {room.Status === 'Available' ? 'จองห้องนี้' : 'ไม่สามารถจองได้'}
                   </button>
-                </div> {/*จัดตำแหน่ง*/}
+                </div> 
 
               </div>
             </div>
           ))}
         </div>
-
-        {/* {rooms.length === 0 && (
-          <div className="mta-no-rooms-message">
-            <p>ไม่พบห้องประชุมประเภท A ที่ว่างในขณะนี้ กรุณาตรวจสอบอีกครั้งในภายหลัง</p>
-          </div>
-        )} */}
       </div>
 
 
@@ -452,22 +445,19 @@ export default function MeetingRoomTypeA() {
       {showConfirmModal && selectedRoom && (
         <div className="mta-modal-overlay">
           <div className="mta-modal-container">
-            {!bookingSuccess ? (
+            {!bookingSuccess ?
+            (
               <>
                 <h3 className="mta-modal-title">ยืนยันการจองห้องประชุม</h3> {/* หัวข้อใน card หลังกดจอง */}
-
-                {/* {bookingError && (
-                  <div className="mta-error-alert">
-                    <span>{bookingError}</span>
-                  </div>
-                )} */}
                 
                 <div className="mta-booking-details"> {/* /*กล่องรายละเอียดการจอง*/}
                   <h4 className="mta-details-title">รายละเอียดการจอง</h4>
                   
                   <ul className="mta-details-list">
+                    {/* ส่ง selectedRoom ไป */}
                     <li className="mta-detail-label">ห้องประชุม: {selectedRoom.Room_Number}</li>
-                    <li className="mta-detail-label">วันที่: {formatDate(selectedDate)}</li>
+                    {/*ส่ง selectedDate ไป */}
+                    <li className="mta-detail-label">วันที่: {formatDate(selectedDate)}</li> 
                     <li className="mta-detail-label">ช่วงเวลา:   {getSelectedTimeSlotName()}</li>
                     <li className="mta-detail-label">ราคา:   ฿{Number(calculatePrice(selectedRoom.Price, selectedTimeSlot)).toFixed(0)}</li>
                   </ul>
@@ -478,40 +468,31 @@ export default function MeetingRoomTypeA() {
                   <p> ยอดเงินจะถูกหักจากกระเป๋าเงินของคุณทันที คุณต้องการดำเนินการต่อหรือไม่? </p>
                 </div>
 
-                <div className="mta-modal-actions">
+                <div className="mta-modal-actions"> {/* ปุุ่มจองกับยกเลิก */}
                   <button
                     onClick={handleConfirmBooking}
-                    disabled={bookingInProgress}
+                    disabled={bookingInProgress} 
                     className="mta-confirm-button"
                   >
                     {bookingInProgress ? 'กำลังดำเนินการ...' : 'ยืนยันการจอง'}
                   </button>
+
                   <button
                     onClick={handleCancelBooking}
-                    disabled={bookingInProgress}
+                    disabled={bookingInProgress} // ถ้ากำลังทำงานในฟังก์ชั่นอยู่จะกดยกเลิกไม่ได้แล้ว
                     className="mta-cancel-button"
                   >
                     ยกเลิก
                   </button>
                 </div>
-
-
               </>
+
             ) : (
+              // bookingSuccess เป็น true จะแสดงข้อความแจ้งการจองห้องประชุมสำเร็จ
               <>
                 <div className="mta-success-message"> {/* ตำแหน่งอักษร */}
                   <h3 className="mta-success-title">จองห้องประชุมสำเร็จ</h3>
                 </div>
-
-                {/* <div className="mta-booking-details">
-                  <h4 className="mta-details-title">รายละเอียดการจอง</h4>
-                  <ul className="mta-details-list">
-                    <li><span className="mta-detail-label">ห้องประชุม:</span> {selectedRoom.Room_Number}</li>
-                    <li><span className="mta-detail-label">วันที่:</span> {formatDate(selectedDate)}</li>
-                    <li><span className="mta-detail-label">ช่วงเวลา:</span> {getSelectedTimeSlotName()}</li>
-                    <li><span className="mta-detail-label">ราคา:</span> ฿{Number(calculatePrice(selectedRoom.Price, selectedTimeSlot)).toFixed(0)}</li>
-                  </ul>
-                </div> */}
                 
                 <div className="mta-success-notice">
                   <p> ยอดเงินได้ถูกหักจากกระเป๋าเงินของคุณเรียบร้อยแล้ว ยอดคงเหลือ: ฿{parseFloat(user.Balance).toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -526,6 +507,7 @@ export default function MeetingRoomTypeA() {
                 </button>
               </>
             )}
+
           </div>
         </div>
       )} /* หน้าต่าง */
@@ -536,3 +518,33 @@ export default function MeetingRoomTypeA() {
 
   )
 }
+
+
+
+
+// Flow ที่เกิดขึ้นในนี้คือ
+// การดึงข้อมูลช่วงเวลา:
+// ฟังก์ชัน fetchInitialData() จะทำงานพร้อมกับ checkAuth()
+// ส่ง request ไปที่ API /api/timeslots เพื่อดึงข้อมูลช่วงเวลาทั้งหมด
+// เมื่อได้รับข้อมูลแล้ว จะเก็บไว้ในตัวแปร timeSlots
+// ตั้งค่าช่วงเวลาเริ่มต้นเป็นช่วงแรกของรายการที่ได้มา และตั้งค่าวันที่เริ่มต้นเป็นวันปัจจุบัน
+
+// การดึงข้อมูลห้องประชุม:
+// เมื่อมีการเลือกวันที่หรือช่วงเวลา useEffect ที่สองจะทำงาน
+// ส่ง request ไปที่ API /api/rooms พร้อมพารามิเตอร์:
+  // type=Type%20A (ระบุประเภทห้องเป็น Type A)
+  // date=${selectedDate} (วันที่ที่เลือก)
+  // timeSlot=${selectedTimeSlot} (ช่วงเวลาที่เลือก)
+// เมื่อได้รับข้อมูลห้องประชุมแล้ว จะเก็บไว้ในตัวแปร rooms
+
+
+
+
+
+
+
+
+
+// ก็เริ่มมาเราก็จะทำการเช็คข้อมูลผู้ใช้ก่อน ก็คือดึงจาก localStorage จากนั้นก็ดึงข้อมูลช่วงเวลา และวันต่างๆ โดยตอนที่เข้ามาก็จะตั้งค่าให้แสดง minDate หรือก็คือ วันปัจจุบัน ส่วน timeSlots ก็เซ็ตไว้เริ่มที่ slots แรก ( ถ้าผู้ใช้มีการเลือกวัน เวลา ใหม่ก็จะทำการอัพเดทข้อมูลไว้ ) แล้วจากนั้นก็ดึงข้อมูลของห้องประชุมทุกๆห้องด้วย api เก็บไว้ในตัวแปร rooms โดยที่ว่าหากผู้ใช้เลือกวันเวลาอื่นๆก็จะทำ useEffect อีกครั้ง (เหมือนดึงข้อมูลอีกรอบ) เพราะว่าเมื่อนเปลี่ยนวันหรือเวลา หมายความว่า ห้องก็จะกลับมาว่างอีกครั้ง หากวันเดิมเป็นสถานะคือเต็ม 
+
+// ต่อมาเมื่อกดจองเราจะใช้ map rooms โดยใช้ room ในการเรียก object (ข้อมูลห้อง) ที่อยู่ภายใน rooms ออกมาทั้งหมดโดยใช้ grid คลุมแต่ละอันไว้ เมื่อกดจองก็จะเรียก handleBookingClick เพื่อเปิด ConfirmModal (bookingSuccess ที่ตอนแรกเป็น false) โดยจะแสดงรายละเอียดต่างๆไว้ แล้วเมื่อกด ยืนยันการจอง ก็จะเรียกใช้ handleConfirmBooking ซึ่งก็จะมีการคำนวนราคาและ ส่งข้อมูลไปที่ api เมื่อตอบกลับเสร็จ ก็จะอัพเดทเงินในกระเป๋า จากนั้น setBookingSuccess เป็น true เพื่อเปิดหน้าแสดงข้อความแจ้งการจองห้องประชุมสำเร็จ 

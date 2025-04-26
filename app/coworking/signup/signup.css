@@ -1,6 +1,10 @@
+
+/* note: 1rem = 16px */
+
 /* -------------------- Background -------------------- */
 .cw-signup-page {
-    min-height: 100vh;
+    height:auto;
+    min-height: 100vh; /*ขั้นต่ำ*/
     background-image: url('https://www.remessaonline.com.br/blog/wp-content/uploads/2022/12/coworking.jpg');
     background-size: cover;
     background-position: center;
@@ -16,9 +20,8 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    /* ปรับความเข้มได้ */
-    z-index: -1;
+    background-color: rgba(0, 0, 0, 0.6); /* ปรับความเข้มได้ */
+    z-index: -1; /*ทำให้ไปอยู่ข้างหลัง*/
 }
 
 
@@ -27,15 +30,17 @@
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-    padding: 25px;
+    padding: clamp(1rem, 2vw, 3rem); /* อย่างน้อย, ตามขนาดจอ, ไม่เกิน */
     width: 100%;
     max-width: 580px;
+    margin: auto;
 }
+
 
 /* -------------------- Typography -------------------- */
 .cw-form-title {
     color: #333;
-    font-size: 22px;
+    font-size: clamp(18px, 2.5vw, 24px);
     font-weight: 600;
     margin-bottom: 1px;
     margin-top: 1px;
@@ -97,6 +102,7 @@
 .cw-input-field:focus {
     border-color: #6687ef;
     outline: none;
+    box-shadow: 0 0 0 2px rgba(102, 135, 239, 0.1);
 }
 
 /* -------------------- Submit Button -------------------- */
@@ -110,7 +116,8 @@
   padding: 0.75rem 1rem;
   border-radius: 0.375rem;
   transition: all 200ms;
-  height: 2.75rem;
+  height: auto;
+  min-height: 2.75rem; /*ขั้นต่ำ*/
   margin-top: 0.6rem;
   margin-bottom: 0.1rem;
   display: flex;
@@ -151,16 +158,4 @@
     margin-bottom: 18px;
     font-size: 13px;
     border-left: 3px solid #e74c3c;
-}
-
-/* -------------------- Responsive Adjustments -------------------- */
-@media (max-width: 580px) {
-    .cw-signup-box {
-        padding: 20px;
-    }
-    
-    .cw-name-fields {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
 }

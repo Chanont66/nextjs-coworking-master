@@ -1,15 +1,14 @@
 'use client'
 
-
-import { useState, useEffect } from 'react'
+import { useState } from 'react' // ไว้สร้างตัวแปรที่จำค่าได้ 
 import { useRouter } from 'next/navigation' // เพื่อใช้ ส่งข้อมูลไปหน้าอื่นๆด้วย
 import Link from 'next/link' // ใช้สำหรับลิงค์ไปหน้าอื่นเฉยๆ
 
 import './login.css'
-// npm install react-icons
-import { FaEye, FaEyeSlash ,FaLock, FaUser } from "react-icons/fa";
+import { FaEye, FaEyeSlash ,FaLock, FaUser } from "react-icons/fa"; // npm install react-icons
 
-
+  
+  
 
 // component หลักของหน้านี้ ก็คือส่วนเนื้อหาของ page นี้
 export default function CoworkingLoginPage() {
@@ -21,30 +20,11 @@ export default function CoworkingLoginPage() {
     User_Name: '',
     U_Password: ''
   })
-
-  // ไว้เปิด-ปิดรหัสผ่านดูได้
-  const [showPassword, setShowPassword] = useState(false)
-
-  // สร้าง error ให้เริ่มต้นเป็น ว่างๆ (setError ไว้ใช้เปลี่ยนค่า)
-  const [error, setError] = useState('')
-
-  // สร้าง isLoading ให้เริ่มต้นมีค่าเป็น false (setIsLoading ไว้ใช้เปลี่ยนค่า)
-  const [isLoading, setIsLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false) // ไว้เปิด-ปิดลูกตาดูรหัสผ่าน  
+  const [error, setError] = useState('') // สร้าง error ให้เริ่มต้นเป็น ว่างๆ (setError ไว้ใช้เปลี่ยนค่า)
+  const [isLoading, setIsLoading] = useState(false) // สร้าง isLoading ให้เริ่มต้นมีค่าเป็น false ปุ่มจะทำงานได้
   
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search)
-      const success = urlParams.get('success')
-      if (success) {
-
-        alert(success)
-
-        window.history.replaceState({}, document.title, window.location.pathname)
-      }
-    }
-  }) 
-  
   // อัพเดต formData ทุกครั้งที่พิมพ์ เพื่อให้ formData เอาไว้ส่งข้อมูลไป backend ในตอนที่เรียก handleLogin
   const handleChange = (e) => { 
     setFormData({
@@ -52,55 +32,54 @@ export default function CoworkingLoginPage() {
       [e.target.name]: e.target.value,
     })
   }
+  // ...formData คัดลอกพวกนี้ไว้ User_Name: '',  U_Password: '' เพื่อจะได้อัพเดตเฉพาะ e.target.value ที่พิมพ์มา
+  // e.target.name -> .name = ชื่อฟิลด์ทั้งหมดของ input "U_Password" หรือ .name = "User_Name"
+  // e.target.value -> ก็แล้วแต่ว่าพิมพ์ช่องไหนก่อน ถ้าชื่อก็เป็น User_Name ถ้ารหัสก็เป็น U_Password
+
 
 
   const handleLogin = async (e) => {
     e.preventDefault() // กัน reload หน้า
-
     setError('') // ให้ error เป็นว่างๆ เวลาเรียก (กดปุ่ม) ใหม่จะได้ไม่ขึ้น Error เก่า
-    setIsLoading(true) // ให้ isLoading เป็น true เวลาที่เรียกใช้ handleLogin ปุ่มจะเปลี่ยนและกดไม่ได้
-    
-    try {
+    setIsLoading(true) // ให้ isLoading เป็น true เวลาที่เรียกใช้ handleLogin ปุ่มจะกดไม่ได้
 
+    try {
       // ส่ง formData ไปยัง backend ที่ /api/users/login ในเมทอต POST แล้วเก็บผลที่ได้ด้วย response
-      const response = await fetch('/api/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData), // ส่งแบบตัวอักษร
+      const response = await fetch('/api/users/login', { // ขอ request 
+        method: 'POST', // POST = ส่งข้อมูลไป
+        headers: { 'Content-Type': 'application/json' }, // ให้ส่งไปเป็น JSON
+        body: JSON.stringify(formData), // แปลง formData เป็น JSON
       })
 
 
-      // เหมือนตัวดัก Error จากที่ backend เขียนไว้ ดู response ว่า OK มั้ย
+      const responseData = await response.json() // ดึงข้อมูลที่ส่งมา(เป็น body)
+
+      // ดัก Error จากที่ backend เขียนไว้ ดู response ว่า OK(200=true) มั้ย
       if (!response.ok) { // ถ้า response.ok เป็น false ให้หยุดการทำงานใน try แล้ว throw Error ไป catch
-        const errorData = await response.json() // รับ Error จาก response มาเก็บใน errorData
-        throw new Error(errorData.error || 'การเข้าสู่ระบบล้มเหลว') // แล้วส่ง errorData.error ไป
+        throw new Error(responseData.error) // แล้วส่ง errorData.error ไป
       }
+      
 
-      if (!formData.User_Name.trim()) {
-        setError('กรุณากรอกชื่อผู้ใช้')
-        return
-      }      
+      //เอา data เก็บใน localStorage ด้วยตัวแปรชื่อ "user" (ก่อนเก็บต้องแปลงเป็น string ก่อน)
+      localStorage.setItem('user', JSON.stringify(responseData.user))  
       
-      const data = await response.json()
-      
-      localStorage.setItem('user', JSON.stringify(data.user))
+      // ไปหน้า home
+      router.push('/coworking/home') 
 
-      router.push('/coworking/home') // นำทางไปยังหน้าหลักหลังจากล็อกอินสำเร็จ
-      
     } catch (err) { // จับ Error ที่ throw มา แล้วตั่งค่าข้อความ error ที่รับมา
-      console.error('Login error:', err)
       setError(err.message || 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ')
     
     } finally {
-      setIsLoading(false) // อันนี้คือถ้าเสร็จแล้วไม่ว่าจะเข้าได้ ไม่ได้ยังไง ก็ต้อง set เป็น false คืน
+      setIsLoading(false) // เสร็จแล้วไม่ว่าจะเข้าได้ ไม่ได้ยังไง ก็ต้อง set เป็น false ให้ปุ่มกลับมาใช้ได้
     }
   }
 
 
 
 
+
+  
+  
   return (
     <div className="login-page">
       <div className="login-box">
@@ -141,11 +120,11 @@ export default function CoworkingLoginPage() {
               รหัสผ่าน
             </label>
             <div className="input-container">
-              <span className="input-icon input-icon-lock"><FaLock /></span>
+              <span className="input-icon icon-lock"><FaLock /></span>
               <input
                 id="U_Password"
                 name="U_Password"
-                type={showPassword ? 'text' : "password"}
+                type={showPassword ? "text" : "password"}
                 required
                 className="input-field"
                 value={formData.U_Password}
@@ -165,7 +144,9 @@ export default function CoworkingLoginPage() {
           <div className="form-group">
             <button
               type="submit"
-              disabled={isLoading} // ถ้า isLoading เป็น true ปุ่มจะกดไม่ได้
+              // isLoading เป็น false (ยังไม่ได้กำลังส่งข้อมูล) ปุ่มจะกดได้ เพราะ disabled={false}
+              // isLoading เป็น true (กำลังส่งข้อมูลอยู่) ปุ่มจะกดไม่ได้ เพราะ disabled={true}
+              disabled={isLoading}
               className="submit-button"
             >
               {/* เช็ค isLoading ว่าเป็น true : false  */}

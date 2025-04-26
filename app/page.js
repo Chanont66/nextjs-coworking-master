@@ -1,3 +1,7 @@
+
+
+// page ของหน้า localhost:3000 ไม่มีอะไรต้องยุ่ง
+
 import Image from "next/image";
 import styles from "./page.module.css";
 

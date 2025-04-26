@@ -1,4 +1,5 @@
 
+/* note: 1rem = 16px */
 
 /* -------------------- พื้นหลังหน้า home -------------------- */
 .Main-home-page {
@@ -26,14 +27,19 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     position: sticky;
     top: 0;
-    z-index: 100; /*ทำให้ไม่โดนทับ*/
+    z-index: 100;
+    /*ทำให้ไม่โดนทับ*/
     width: 100%;
 }
 
 .header-container {
     display: flex;
+    justify-content: space-between; /* จัดให้มีพื้นที่ระหว่างกัน */
+    align-items: center;
     padding: 1.18rem 3rem;
     max-width: 1400px;
+    width: 100%;
+    margin: 0 auto; /* ทำให้อยู่ตรงกลาง */
 }
 
 .site-title {
@@ -43,7 +49,7 @@
     color: #333;
     margin-right: 2rem;
     white-space: nowrap;
-    text-decoration: none; 
+    text-decoration: none;
 }
 
 
@@ -52,13 +58,13 @@
 .nav-container {
     display: flex;
     align-items: center;
-    margin-right: 5rem;
+    margin-right: auto;
 }
 
 .containerLeft {
     display: flex;
     align-items: center;
-    margin-left: 23rem;
+    margin-left: auto;
 }
 
 .containerRight {
@@ -73,6 +79,7 @@
     text-decoration: none;
     color: #555;
     font-weight: 500;
+    font-size: 1.1rem;
     padding: 0.5rem 1rem;
     border-radius: 4px;
     transition: all 0.2s ease;
@@ -87,7 +94,7 @@
 
 
 /* -------------------- กระเป๋าเงินผู้ใช้ -------------------- */
-.wallet-balance {
+.wallet-balance { /*ตัวปุ่ม*/
     display: flex;
     align-items: center;
     background-color: white;
@@ -98,6 +105,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
+    margin-left: auto;
 }
 
 .wallet-balance:hover {
@@ -112,7 +120,7 @@
     white-space: nowrap;
 }
 
-.balance-amount {
+.balance-amount { /*จำนวนเงิน*/
     margin-right: 0.5rem;
     font-weight: 600;
     font-size: 0.9rem;
@@ -128,7 +136,8 @@
     background-color: white;
     color: #333;
     border: none;
-    padding: 0.5rem 1.2rem;
+    padding: 0.5rem;
+    padding-inline-end: 0.5rem; /*อันนี้ช่วยรักษาระยะจากขอบจอได้ดี*/
     border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
@@ -142,9 +151,10 @@
     color: #333;
 }
 
+
 /* ------------ card logout ------------ */
-/* ------------ card logout ------------ */
-.modal-overlay { /*ทำให้มันไม่โดนทับ*/
+.modal-overlay {
+    /*ทำให้มันไม่โดนทับ*/
     position: fixed;
     top: 0;
     left: 0;
@@ -155,32 +165,36 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
-  
-  .confirmation-dialog { /*กล่องพื้นหลัง*/
+}
+
+.confirmation-dialog {
+    /*กล่องพื้นหลัง*/
     background-color: white;
     border-radius: 8px;
     padding: 24px;
     width: 320px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     text-align: center;
-  }
-  
-  .dialog-title { /* หัวข้อ */
+}
+
+.dialog-title {
+    /* หัวข้อ */
     margin-top: 0;
     font-size: 20px;
     font-weight: 600;
     color: #333;
     margin-bottom: 16px;
-  }
-  
-  .dialog-message { /* คำถาม */
+}
+
+.dialog-message {
+    /* คำถาม */
     margin-bottom: 24px;
     font-size: 16px;
     color: #666;
-  }
-  
-  .cancel-button { /* ปุ่มยกเลิก */
+}
+
+.cancel-button {
+    /* ปุ่มยกเลิก */
     padding: 10px 20px;
     margin-right: 12px;
     background-color: #c6c6c6;
@@ -189,10 +203,12 @@
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
-  }
-  
-  
-  .confirm-button { /* ปุ่มตกลง */
+}
+
+
+
+ /* ------------------ ปุ่มตกลงทั้งลบบัญชี ทั้งlogoutเลย ------------------ */
+.confirm-button {  
     padding: 10px 20px;
     background-color: #f44336;
     color: white;
@@ -201,11 +217,32 @@
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
-  }
-  
-  .confirm-button:hover {
+}
+
+.confirm-button:hover {
     background-color: #e53935;
-  }
+}
+
+.confirm-button:disabled {
+    background-color: #df4d4d;
+    cursor: not-allowed;
+}
+
+
+/* ---------------- ยืนยันการลบบัญชี ---------------- */
+.warning-text {
+    color: #f44336;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.delete-button {
+    background-color: #f44336;
+}
+
+.delete-button:hover {
+    background-color: #d32f2f;
+}
 
 
 
@@ -224,14 +261,16 @@
 
 
 /* -------------------- กล่องเนื้อหา (การ์ด) -------------------- */
-.content-card { /*ข้อมูลเพิ่มเติม*/
+.content-card {
+    /*ข้อมูลเพิ่มเติม*/
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     padding: 1.5rem;
 }
 
-.content-card2 { /*จองห้อง*/
+.content-card2 {
+    /*จองห้อง*/
     margin-top: 1rem;
     background-color: #fff;
     border-radius: 8px;
@@ -239,7 +278,8 @@
     padding: 1.5rem;
 }
 
-.content-card2:first-child { /*ข้อมูลผู้ใช้*/
+.content-card2:first-child {
+    /*ข้อมูลผู้ใช้*/
     margin-top: 2rem;
     background-color: #fff;
     border-radius: 8px;
@@ -264,19 +304,13 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
     max-width: 1200px;
-    margin: 2rem 0.5;
+    margin: 2rem auto;
     padding: 0 1rem;
 }
 
 .profile-item { /*เหมือน card ข้างในอีกทีแต่ขก.เปลี่ยนชื่อละ*/
     padding: 0.6rem;
     background-color: #fafafa;
-    border-radius: 4px;
-    /* border: 1px solid #f0f0f0; */
-}
-
-.profile-item:hover {
-    background-color: #f5f5f5;
 }
 
 .profile-label { /*หัวข้อ*/
@@ -289,10 +323,10 @@
     font-size: 1rem;
     color: #333;
     margin: 0;
-    word-break: break-word;
 }
 
-.status-dot { /*ทำวงกลม (เพื่อไรไม่รู้ เท่ดี)*/
+.status-dot {
+    /*ทำวงกลม (เพื่อไรไม่รู้ เท่ดี)*/
     display: inline-block;
     width: 8px;
     height: 8px;
@@ -311,7 +345,8 @@
     gap: 1.5rem;
 }
 
-.room-card { /*card*/
+.room-card {
+    /*card*/
     background-color: #f8f9fa;
     border-radius: 8px;
     padding: 1.5rem;
@@ -327,7 +362,7 @@
     transform: translateY(-3px);
 }
 
-.room-header{ /*จัดตำแหน่งหัวข้อ*/
+.room-header {
     margin-bottom: 0.7rem;
 }
 
@@ -356,17 +391,20 @@
     margin-bottom: 1.5rem;
 }
 
-.room-feature { /*list*/
+.room-feature {
+    /*list*/
     margin-bottom: 0.75rem;
     color: #555;
     font-size: 0.95rem;
 }
 
 .room-feature::marker {
-    color: #555; /* สีของจุดเท่านั้น */
+    color: #555;
+    /* สีของจุดเท่านั้น */
 }
 
-.room-link-button { /*ปุ่มไปดูรายละเอียดห้อง*/
+.room-link-button {
+    /*ปุ่มไปดูรายละเอียดห้อง*/
     padding: 0.75rem 1.5rem;
     background-color: #8B4513;
     color: white;
@@ -394,14 +432,15 @@
     margin-bottom: 1rem;
     color: #555;
     display: flex;
-        align-items: center;
+    align-items: center;
     padding: 12px 15px;
     background-color: #f7f5f2;
     border-left: 3px solid #723408;
 }
 
 
-.info-item:last-child { /*ทำให้ตัวสุดท้าย ลดที่ว่างด้านล่าง*/
+.info-item:last-child {
+    /*ทำให้ตัวสุดท้าย ลดที่ว่างด้านล่าง*/
     margin-bottom: 0;
 }
 
@@ -426,13 +465,59 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    animation: spin 1s linear infinite;
+    animation: spinMta 1s linear infinite;
 }
 
-@keyframes spin {
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
+@keyframes spinMta {
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
+
+/* ----------------- เพิ่ม CSS สำหรับการแสดงปุ่มลบไอดี ----------------- */
+.profile-container {
+    position: relative;
+    width: 100%;
+}
+
+.delete-account-button {
+    margin-top: 7rem;
+    position: absolute;
+    top: 10px;
+    right: 1px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-account-button:hover {
+    background-color: #d32f2f;
+}
+
+.delete-icon {
+    font-size: 16px;
+}
+
+
+
+/* ---------- spinner สำหรับ isDeleting ---------- */
+.home-spinner {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    border-top: 3px solid #e55e46;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
   
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }

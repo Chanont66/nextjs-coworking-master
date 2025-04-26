@@ -4,15 +4,16 @@
 import './signup.css'
 
 import { useState } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-
-import { FaEye, FaEyeSlash ,FaLock, FaUser } from "react-icons/fa";
+import Link from 'next/link' // ไปแบบรวดเร็ว แบบ HTML
+import { useRouter } from 'next/navigation' // ไปหน้าอื่นแบบต้องเช็ค logic
 
 
+
+// component หลักของหน้านี้ ก็คือส่วนเนื้อหาของ page นี้
 export default function SignupPage() {
-  const router = useRouter()
+  const router = useRouter() // ไว้ไปหน้าอื่น
   
+  // ข้อมูลจ้า
   const [formData, setFormData] = useState({
     User_Name: '',
     First_Name: '',
@@ -23,9 +24,9 @@ export default function SignupPage() {
     U_Email: '',
     User_Type: 'User' // ค่าเริ่มต้นตามที่กำหนดในสคีมา
   })
+  const [error, setError] = useState('') // สร้าง error ให้เริ่มต้นเป็น ว่างๆ (setError ไว้ใช้เปลี่ยนค่า)
+  const [isSubmitting, setIsSubmitting] = useState(false) // เริ่มต้นมีค่าเป็น false ปุ่มจะทำงานได้
 
-  const [error, setError] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleChange = (e) => {
     setFormData({
@@ -33,29 +34,33 @@ export default function SignupPage() {
       [e.target.name]: e.target.value,
     })
   }
+  // ...formData คัดลอก formData ทั้งหมด เพื่อจะได้อัพเดตเฉพาะ e.target.value ที่พิมพ์มา
+  // e.target.name -> .name = ชื่อฟิลด์ทั้งหมดของ input (แล้วแต่ว่าใส่อะไรก่อน)
+  // e.target.value -> ก็แล้วแต่ว่าพิมพ์ช่องไหนก่อน ถ้าชื่อก็เป็น User_Name ถ้ารหัสก็เป็น U_Password
+
 
   const validateForm = () => {
-    // ตรวจสอบรหัสผ่านตรงกัน
+    // ตรวจสองช่องว่ารหัสผ่านตรงกัน
     if (formData.U_Password !== formData.U_PasswordConfirm) {
       setError('รหัสผ่านไม่ตรงกัน')
       return false
     }
     
-    // ตรวจสอบว่าข้อมูลสำคัญครบถ้วน
+    // ตรวจว่าข้อมูลสำคัญครบถ้วน
     if (!formData.User_Name || !formData.First_Name || !formData.Last_Name || 
         !formData.U_Password || !formData.U_Email) {
       setError('กรุณากรอกข้อมูลให้ครบถ้วน')
       return false
     }
     
-    // ตรวจสอบรูปแบบอีเมล
+    // ตรวจรูปแบบอีเมล
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(formData.U_Email)) {
       setError('รูปแบบอีเมลไม่ถูกต้อง')
       return false
     }
     
-    // ตรวจสอบเบอร์โทรศัพท์ (ถ้ามีการกรอก)
+    // ตรวจบอร์โทรศัพท์ (ถ้ามีการกรอก)
     if (formData.U_Phone) {
       const phoneRegex = /^\d{10}$/
       if (!phoneRegex.test(formData.U_Phone)) {
@@ -63,52 +68,48 @@ export default function SignupPage() {
         return false
       }
     }
-    
     return true
   }
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
 
-    // ตรวจสอบข้อมูลก่อนส่ง
-    if (!validateForm()) {
-      return
-    }
+    // แสดง error เลยถ้าเจอมาจากที่เขียนไว้ข้างบน
+    if (!validateForm()) { return }
     
-    setIsSubmitting(true)
+    setIsSubmitting(true) // ทำให้ปุ่มปิด
     
     try {
-      // แยกข้อมูลยืนยันรหัสผ่านออกก่อนส่ง
-      const { U_PasswordConfirm, ...dataToSubmit } = formData
+      const { U_PasswordConfirm, ...dataToSubmit } = formData // ไม่ต้องส่ง U_PasswordConfirm
       
-      const response = await fetch('/api/users/signup', {
+
+      // ส่ง formData ไปยัง backend ที่ /api/users/login ในเมทอต POST แล้วเก็บผลที่ได้ด้วย response
+      const response = await fetch('/api/users/signup', { // ขอ request 
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dataToSubmit),
+        headers: { 'Content-Type': 'application/json' }, // ให้ส่งไปเป็น JSON
+        body: JSON.stringify(dataToSubmit), // ส่ง formData เป็น JSON
       })
       
-      const responseData = await response.json()
+      const responseData = await response.json() // ขอข้อมูลผู้ใช้จาก api
       
-      // ตรวจสอบสถานะการตอบกลับ
-      if (!response.ok) {
+      // เหมือนตัวดัก Error จากที่ backend เขียนไว้ ดู response ว่า OK มั้ย
+      if (!response.ok) { // ถ้า response.ok เป็น false ให้หยุดการทำงานใน try แล้ว throw Error ไป catch
         throw new Error(responseData.error || 'ไม่สามารถสร้างบัญชีได้')
       }
-      
-      // แสดงข้อความแจ้งเตือนแบบ alert เหมือน JOptionPane ใน Java
+
+
       alert('ลงทะเบียนสำเร็จ')
+      router.push('/coworking') // กลับไปยังหน้า login
       
-      // นำทางกลับไปยังหน้าหลัก coworking
-      router.push('/coworking')
-      
-    } catch (err) {
+    } catch (err) { // จับ Error ที่ throw มา แล้วตั่งค่าข้อความ error ที่รับมา
       console.error('Signup error:', err)
       setError(err.message || 'เกิดข้อผิดพลาดในการสร้างบัญชี')
+
     } finally {
-      setIsSubmitting(false)
-    }
+      setIsSubmitting(false) // เสร็จแล้วไม่ว่าจะเข้าได้ ไม่ได้ยังไง ก็ต้อง set เป็น false ให้ปุ่มกลับมาใช้ได้
+    } 
   }
 
 
@@ -126,9 +127,10 @@ export default function SignupPage() {
             </Link>
           </p>
         
-        
+        {/* แสดงค่าใน error ก็ถ้ามีมันก็จะขึ้น ถ้าไม่มีก็คือ error เป็น null  */}
         {error ? (<div className="cw-show-error">{error}</div>) : null}
         
+        {/* form นี้คือ ถ้าถูก submit(กดปุ่ม) จะเรียก handleLogin → แล้วเซ็ต isLoading เป็น true */}
         <form className="cw-signup-form" onSubmit={handleSubmit}>
           <div className="cw-form-fields">
             
@@ -212,7 +214,7 @@ export default function SignupPage() {
                 name="U_Phone"
                 type="tel"
                 maxLength="10"
-                pattern="\d{10}"
+                pattern="\d{10}" /* \d = เลข 1-9, {10} = 10ตัว */
                 className="cw-input-field"
                 placeholder="0899999999"
                 value={formData.U_Phone}
@@ -267,11 +269,13 @@ export default function SignupPage() {
             disabled={isSubmitting}
             className="cw-submit-button"
           >
+            {/* เช็ค isLoading ว่าเป็น true : false  */}
             {isSubmitting ? (<><span className="cw-spinner"></span>กำลังสร้างบัญชี...</>) : 'สมัครสมาชิก'}
           </button>
 
+        </form> {/* form นี้คือ ถ้าถูก submit(กดปุ่ม) จะเรียก handleLogin → แล้วเซ็ต isLoading เป็น true */}
 
-        </form>
+
       </div>
     </div>
   )

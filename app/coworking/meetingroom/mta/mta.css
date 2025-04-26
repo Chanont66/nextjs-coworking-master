@@ -1,4 +1,6 @@
 
+/* note: 1rem = 16px */
+
 
 /* -------------------- พื้นหลังหน้า mta -------------------- */
 .Main-mta-page {
@@ -543,9 +545,7 @@
 }
 
 @keyframes spin {
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
+    100% { transform: translate(-50%, -50%) rotate(360deg);}
 }
 
 
