@@ -284,67 +284,7 @@ export default function TopupHistoryPage() {
         </div>
 
         {/* ตัวกรองและการค้นหา */}
-        <div className="his-filter-container">
-          <div className="his-filter-grid">
-            {/* ตัวกรองประเภท */}
-            <div>
-              <label htmlFor="type-filter" className="his-filter-label">
-                ประเภท
-              </label>
-              <select
-                id="type-filter"
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-                className="his-filter-select"
-              >
-                <option value="all">ทั้งหมด</option>
-                <option value="Topup">เติมเงิน</option>
-                <option value="Booking">การจอง</option>
-              </select>
-            </div>
-
-            {/* ช่วงวันที่ */}
-            <div>
-              <label className="his-filter-label">
-                วันที่
-              </label>
-              <div className="his-date-range">
-                <input
-                  type="date"
-                  id="date-from"
-                  value={dateRange.from}
-                  onChange={(e) => setDateRange({ ...dateRange, from: e.target.value })}
-                  className="his-filter-input"
-                  placeholder="วันที่เริ่มต้น"
-                />
-                <input
-                  type="date"
-                  id="date-to"
-                  value={dateRange.to}
-                  onChange={(e) => setDateRange({ ...dateRange, to: e.target.value })}
-                  className="his-filter-input"
-                  placeholder="วันที่สิ้นสุด"
-                />
-              </div>
-            </div>
-
-            {/* การเรียงลำดับ */}
-            <div>
-              <label htmlFor="sort-order" className="his-filter-label">
-                เรียงลำดับ
-              </label>
-              <select
-                id="sort-order"
-                value={sortOrder}
-                onChange={(e) => setSortOrder(e.target.value)}
-                className="his-filter-select"
-              >
-                <option value="DESC">ล่าสุด</option>
-                <option value="ASC">เก่าสุด</option>
-              </select>
-            </div>
-          </div>
-        </div>
+       
 
         {/* แสดงสถานะกำลังโหลดข้อมูลเพิ่มเติม */}
         {loading && combinedData.length > 0 && (

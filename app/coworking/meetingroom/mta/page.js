@@ -10,8 +10,7 @@ import './mta.css'
 
 export default function MeetingRoomTypeA() {
   const router = useRouter()
-  const [rooms, setRooms] = useState([]) // เก็บห้องทั้งหมด
-
+  const [rooms, setRooms] = useState([]) // เก็บห้องทั้งหมดจาก api
   const [timeSlots, setTimeSlots] = useState([]) // เก็บช่วงเวลาทั้งหมดที่ได้จาก api
   
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('') // อัพเดทช่วงเวลาที่เลือก
@@ -36,7 +35,7 @@ export default function MeetingRoomTypeA() {
   // ----------------------- เช็คข้อมูล และดึงวันเวลา -----------------
   useEffect(() => {
     // ดึงข้อมูลจาก localStorage
-    const checkAuth = () => { 
+    const checkAuth = () => {
       try {
         const storedUser = localStorage.getItem('user') // ดึงข้อมูลผู้ใช้ใน localStorage จากตัวแปร user
         
@@ -149,6 +148,7 @@ export default function MeetingRoomTypeA() {
     
     // เช็คว่ามีเงินพอมั้ย
     const totalPrice = calculatePrice(room.Price, selectedTimeSlot)
+
     if (parseFloat(user.Balance) < totalPrice) {
       alert('ยอดเงินในกระเป๋าไม่เพียงพอ กรุณาเติมเงินก่อนทำการจอง')
       return
@@ -183,7 +183,7 @@ export default function MeetingRoomTypeA() {
         timeSlotId: parseInt(selectedTimeSlot),
         bookingDate: selectedDate,
         totalPrice: totalPrice,
-        user: user // ส่งข้อมูลผู้ใช้ไปด้วย
+        user: user
       }
       
       
@@ -191,7 +191,7 @@ export default function MeetingRoomTypeA() {
       const response = await fetch('/api/bookings/create', { // ขอ request 
         method: 'POST', // POST = ส่งข้อมูลไป
         headers: { 'Content-Type': 'application/json' }, // ให้ส่งไปเป็น JSON
-        body: JSON.stringify(bookingData), // แปลง formData เป็น JSON
+        body: JSON.stringify(bookingData), // แปลง bookingData เป็น JSON
       })
       
       // ตรวจสอบว่ามีข้อผิดพลาดหรือไม่
@@ -412,6 +412,7 @@ export default function MeetingRoomTypeA() {
                 
                 <div className="mta-room-details"> {/* ดึงรายละเอียดห้อง */}
                   <span>ความจุ: {room.Capacity} คน</span>
+                  {/* ส่ง room.Price, selectedTimeSlot ไป */}
                   <span>ราคา: ฿{Number(calculatePrice(room.Price, selectedTimeSlot)).toFixed(0)}</span>
                 </div>
 

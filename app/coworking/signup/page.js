@@ -104,7 +104,6 @@ export default function SignupPage() {
       router.push('/coworking') // กลับไปยังหน้า login
       
     } catch (err) { // จับ Error ที่ throw มา แล้วตั่งค่าข้อความ error ที่รับมา
-      console.error('Signup error:', err)
       setError(err.message || 'เกิดข้อผิดพลาดในการสร้างบัญชี')
 
     } finally {

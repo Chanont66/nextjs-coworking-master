@@ -125,7 +125,7 @@ export default function CoworkingHomePage() {
 
 
           {/* --------------------------- Wallet ---------------------------- */}
-          <div className="containerLeft"> {/* 6 */}
+          <div className="containerLeft"> 
             {user && ( 
               <button onClick={() => router.push('/coworking/topup')} className="wallet-balance">  
                 <span className="balance-label">ยอดเงิน: </span>  
